@@ -1,0 +1,52 @@
+ARQUITETURA DO APP - MEU LUCRO MEI
+
+ESTRUTURA DO PROJETO
+
+lib/
+  main.dart
+  models/
+    movimentacao.dart
+  screens/
+    dashboard_screen.dart
+    nova_entrada_screen.dart
+    nova_saida_screen.dart
+    extrato_screen.dart
+  services/
+    armazenamento_service.dart
+
+FUNCAO DE CADA ARQUIVO
+
+main.dart
+- iniciar o aplicativo
+
+movimentacao.dart
+- representar cada entrada ou saida
+
+dashboard_screen.dart
+- exibir saldo atual
+- exibir entradas do mes
+- exibir saidas do mes
+- exibir lucro do mes
+- acessar as outras telas
+
+nova_entrada_screen.dart
+- cadastrar nova entrada
+
+nova_saida_screen.dart
+- cadastrar nova saida
+
+extrato_screen.dart
+- listar movimentacoes
+- permitir excluir registro
+
+armazenamento_service.dart
+- salvar dados no celular
+- ler dados salvos
+- atualizar lista de movimentacoes
+
+DADOS DE CADA MOVIMENTACAO
+- tipo
+- valor
+- descricao
+- categoria
+- data
