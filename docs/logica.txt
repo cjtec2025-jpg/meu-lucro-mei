@@ -1,0 +1,50 @@
+LOGICA DO APP - MEU LUCRO MEI
+
+MOVIMENTACAO
+Cada registro deve conter:
+- tipo
+- valor
+- descricao
+- categoria
+- data
+
+TIPOS
+- entrada
+- saida
+
+REGRAS DE CALCULO
+
+TOTAL DE ENTRADAS
+- somar todos os registros do tipo entrada
+
+TOTAL DE SAIDAS
+- somar todos os registros do tipo saida
+
+SALDO ATUAL
+- total de entradas menos total de saidas
+
+LUCRO DO MES
+- entradas do mes menos saidas do mes
+
+COMPORTAMENTO DO APP
+
+AO SALVAR ENTRADA
+- criar movimentacao
+- salvar no celular
+- atualizar dashboard
+- mostrar no extrato
+
+AO SALVAR SAIDA
+- criar movimentacao
+- salvar no celular
+- atualizar dashboard
+- mostrar no extrato
+
+AO EXCLUIR REGISTRO
+- remover movimentacao
+- recalcular valores
+- atualizar dashboard
+- atualizar extrato
+
+EXTRATO
+- mostrar registros mais recentes primeiro
