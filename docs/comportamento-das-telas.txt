@@ -1,0 +1,55 @@
+COMPORTAMENTO DAS TELAS - MEU LUCRO MEI
+
+CATEGORIAS DE ENTRADA
+- Servicos
+- Vendas
+- Comissao
+- Outro
+
+CATEGORIAS DE SAIDA
+- Alimentacao
+- Transporte
+- Internet
+- Material
+- Ferramentas
+- Impostos
+- Outro
+
+DASHBOARD
+- exibir saldo atual
+- exibir entradas do mes
+- exibir saidas do mes
+- exibir lucro do mes
+- botao nova entrada
+- botao nova saida
+- botao ver extrato
+- recalcular valores ao abrir
+
+NOVA ENTRADA
+- campo valor obrigatorio
+- campo descricao obrigatorio
+- campo categoria obrigatorio
+- valor deve ser maior que zero
+- ao salvar, voltar para dashboard
+
+NOVA SAIDA
+- campo valor obrigatorio
+- campo descricao obrigatorio
+- campo categoria obrigatorio
+- valor deve ser maior que zero
+- ao salvar, voltar para dashboard
+
+EXTRATO
+- listar registros do mais recente para o mais antigo
+- exibir tipo
+- exibir valor
+- exibir descricao
+- exibir categoria
+- exibir data
+- permitir excluir registro
+- atualizar dados apos exclusao
+
+MENSAGENS DE VALIDACAO
+- Informe um valor valido
+- Preencha a descricao
+- Selecione uma categoria
