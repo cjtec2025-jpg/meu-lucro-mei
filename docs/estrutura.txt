@@ -1,0 +1,13 @@
+APP: Meu Lucro MEI
+
+TELAS:
+- Dashboard
+- Nova Entrada
+- Nova Saída
+- Extrato
+
+FUNCIONALIDADES:
+- Registrar ganhos
+- Registrar gastos
+- Calcular lucro
+- Exibir saldo
