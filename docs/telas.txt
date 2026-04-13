@@ -1,0 +1,30 @@
+TELAS DO APP - MEU LUCRO MEI
+
+DASHBOARD
+- Exibir saldo atual
+- Exibir entradas do mes
+- Exibir saidas do mes
+- Exibir lucro do mes
+- Botao Nova Entrada
+- Botao Nova Saida
+- Botao Ver Extrato
+
+NOVA ENTRADA
+- Campo valor
+- Campo descricao
+- Campo categoria
+- Botao salvar
+
+NOVA SAIDA
+- Campo valor
+- Campo descricao
+- Campo categoria
+- Botao salvar
+
+EXTRATO
+- Listar todas movimentacoes
+- Exibir tipo (entrada/saida)
+- Exibir valor
+- Exibir categoria
+- Exibir descricao
+- Permitir excluir registro
