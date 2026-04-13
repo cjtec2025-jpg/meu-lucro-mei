@@ -1,0 +1,42 @@
+REGRAS DO APP - MEU LUCRO MEI
+
+REGISTROS FINANCEIROS
+Cada registro deve conter:
+- valor
+- descricao
+- categoria
+
+TIPOS DE REGISTRO
+- entrada
+- saida
+
+TELAS
+- Dashboard
+- Nova Entrada
+- Nova Saida
+- Extrato
+
+DASHBOARD
+Deve exibir:
+- saldo atual
+- total de entradas do mes
+- total de saidas do mes
+- lucro do mes
+
+CATEGORIAS DE ENTRADA
+- Servicos
+- Vendas
+- Comissao
+- Outro
+
+CATEGORIAS DE SAIDA
+- Alimentacao
+- Transporte
+- Internet
+- Material
+- Ferramentas
+- Impostos
+- Outro
+
+OBJETIVO
+Permitir que o MEI registre movimentacoes de forma simples e entenda seu lucro mensal.
