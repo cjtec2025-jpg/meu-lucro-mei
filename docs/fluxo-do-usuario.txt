@@ -1,0 +1,52 @@
+FLUXO DO USUARIO - MEU LUCRO MEI
+
+PRIMEIRO ACESSO
+- abrir app
+- entrar direto no dashboard
+- exibir saldo atual
+- exibir entradas do mes
+- exibir saidas do mes
+- exibir lucro do mes
+- se nao houver dados, mostrar valores zerados
+
+FLUXO PARA ADICIONAR ENTRADA
+- acessar dashboard
+- tocar em Nova Entrada
+- preencher valor
+- preencher descricao
+- selecionar categoria
+- tocar em Salvar Entrada
+- salvar registro
+- voltar para dashboard
+- atualizar valores
+
+FLUXO PARA ADICIONAR SAIDA
+- acessar dashboard
+- tocar em Nova Saida
+- preencher valor
+- preencher descricao
+- selecionar categoria
+- tocar em Salvar Saida
+- salvar registro
+- voltar para dashboard
+- atualizar valores
+
+FLUXO PARA VER EXTRATO
+- acessar dashboard
+- tocar em Ver Extrato
+- listar movimentacoes
+- mostrar registros mais recentes primeiro
+
+FLUXO PARA EXCLUIR REGISTRO
+- acessar extrato
+- tocar em Excluir
+- remover item
+- salvar lista atualizada
+- atualizar extrato
+- atualizar dashboard
+
+FLUXO DE VALIDACAO
+- informar erro se valor for invalido
+- informar erro se descricao estiver vazia
+- informar erro se categoria nao for selecionada
+- nao salvar enquanto houver erro
