@@ -1,0 +1,46 @@
+ARMAZENAMENTO DO APP - MEU LUCRO MEI
+
+FORMATO DE CADA REGISTRO
+- id
+- tipo
+- valor
+- descricao
+- categoria
+- data
+
+EXEMPLO DE ENTRADA
+id: 1
+tipo: entrada
+valor: 300.00
+descricao: Conserto notebook
+categoria: Servicos
+data: 2026-04-13
+
+EXEMPLO DE SAIDA
+id: 2
+tipo: saida
+valor: 50.00
+descricao: Uber cliente
+categoria: Transporte
+data: 2026-04-13
+
+REGRAS
+- cada registro deve ter id unico
+- tipo deve ser entrada ou saida
+- valor deve ser numerico
+- descricao deve ser preenchida
+- categoria deve ser preenchida
+- data deve ser salva no registro
+
+COMPORTAMENTO
+- salvar novos registros no celular
+- carregar registros ao abrir o app
+- excluir registros existentes
+- atualizar a lista local
+
+USO DOS DADOS
+- montar extrato
+- calcular entradas
+- calcular saidas
+- calcular saldo
+- calcular lucro
