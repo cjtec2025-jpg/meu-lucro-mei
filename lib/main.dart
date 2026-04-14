@@ -15,10 +15,7 @@ class MeuLucroApp extends StatelessWidget {
       title: 'Meu Lucro MEI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-        ),
-        scaffoldBackgroundColor: const Color(0xFFF5F7FB),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: const DashboardScreen(),
@@ -31,55 +28,68 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double saldo = 1250.00;
-    const double entradas = 3000.00;
-    const double saidas = 1750.00;
-    const double lucro = 1250.00;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meu Lucro MEI'),
-        centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            _ResumoCard(
+            const SizedBox(height: 10),
+
+            // Cards de resumo
+            const _ResumoCard(
               titulo: 'Saldo atual',
-              valor: saldo,
+              valor: 0.0,
               destaque: true,
             ),
             const SizedBox(height: 12),
-            _ResumoCard(
+            const _ResumoCard(
               titulo: 'Entradas do mês',
-              valor: entradas,
+              valor: 0.0,
             ),
             const SizedBox(height: 12),
-            _ResumoCard(
+            const _ResumoCard(
               titulo: 'Saídas do mês',
-              valor: saidas,
+              valor: 0.0,
             ),
-            const SizedBox(height: 12),
-            _ResumoCard(
-              titulo: 'Lucro do mês',
-              valor: lucro,
-            ),
-            const SizedBox(height: 24),
+
+            const SizedBox(height: 20),
+
+            // Botões
             _AcaoButton(
               texto: 'Nova Entrada',
               icone: Icons.add,
               cor: Colors.green,
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NovaEntradaScreen(),
+                  ),
+                );
+              },
             ),
+
             const SizedBox(height: 12),
+
             _AcaoButton(
               texto: 'Nova Saída',
               icone: Icons.remove,
               cor: Colors.red,
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NovaSaidaScreen(),
+                  ),
+                );
+              },
             ),
+
             const SizedBox(height: 12),
+
             _AcaoButton(
               texto: 'Ver Extrato',
               icone: Icons.list,
@@ -92,6 +102,10 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 }
+
+// =======================
+// CARD DE RESUMO
+// =======================
 
 class _ResumoCard extends StatelessWidget {
   final String titulo;
@@ -106,25 +120,18 @@ class _ResumoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle valorStyle = TextStyle(
-      fontSize: destaque ? 32 : 22,
+    final valorStyle = TextStyle(
+      fontSize: destaque ? 26 : 20,
       fontWeight: FontWeight.bold,
-      color: const Color(0xFF1F3B73),
+      color: destaque ? Colors.blue : Colors.black,
     );
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x14000000),
-            blurRadius: 10,
-            offset: Offset(0, 4),
-          ),
-        ],
+        color: destaque ? Colors.blue.withOpacity(0.1) : Colors.grey[100],
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,6 +147,10 @@ class _ResumoCard extends StatelessWidget {
     );
   }
 }
+
+// =======================
+// BOTÃO DE AÇÃO
+// =======================
 
 class _AcaoButton extends StatelessWidget {
   final String texto;
@@ -158,25 +169,21 @@ class _AcaoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 56,
+      height: 55,
       child: ElevatedButton.icon(
         onPressed: onTap,
-        icon: Icon(
-          icone,
-          color: Colors.white,
-        ),
+        icon: Icon(icone, color: Colors.white),
         label: Text(
           texto,
           style: const TextStyle(
             fontSize: 16,
             color: Colors.white,
-            fontWeight: FontWeight.w600,
           ),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: cor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
       ),
