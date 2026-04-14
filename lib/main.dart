@@ -38,26 +38,31 @@ class DashboardScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 10),
 
-            // Cards de resumo
             const _ResumoCard(
               titulo: 'Saldo atual',
               valor: 0.0,
               destaque: true,
             ),
             const SizedBox(height: 12),
+
             const _ResumoCard(
               titulo: 'Entradas do mês',
               valor: 0.0,
             ),
             const SizedBox(height: 12),
+
             const _ResumoCard(
               titulo: 'Saídas do mês',
               valor: 0.0,
             ),
+            const SizedBox(height: 12),
 
+            const _ResumoCard(
+              titulo: 'Lucro do mês',
+              valor: 0.0,
+            ),
             const SizedBox(height: 20),
 
-            // Botões
             _AcaoButton(
               texto: 'Nova Entrada',
               icone: Icons.add,
@@ -71,7 +76,6 @@ class DashboardScreen extends StatelessWidget {
                 );
               },
             ),
-
             const SizedBox(height: 12),
 
             _AcaoButton(
@@ -87,7 +91,6 @@ class DashboardScreen extends StatelessWidget {
                 );
               },
             ),
-
             const SizedBox(height: 12),
 
             _AcaoButton(
@@ -102,10 +105,6 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 }
-
-// =======================
-// CARD DE RESUMO
-// =======================
 
 class _ResumoCard extends StatelessWidget {
   final String titulo;
@@ -148,10 +147,6 @@ class _ResumoCard extends StatelessWidget {
   }
 }
 
-// =======================
-// BOTÃO DE AÇÃO
-// =======================
-
 class _AcaoButton extends StatelessWidget {
   final String texto;
   final IconData icone;
@@ -172,7 +167,10 @@ class _AcaoButton extends StatelessWidget {
       height: 55,
       child: ElevatedButton.icon(
         onPressed: onTap,
-        icon: Icon(icone, color: Colors.white),
+        icon: Icon(
+          icone,
+          color: Colors.white,
+        ),
         label: Text(
           texto,
           style: const TextStyle(
