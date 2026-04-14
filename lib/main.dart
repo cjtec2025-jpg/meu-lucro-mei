@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'nova_entrada_screen.dart';
 import 'nova_saida_screen.dart';
+import 'extrato_screen.dart';
 
 void main() {
   runApp(const MeuLucroApp());
@@ -97,7 +98,14 @@ class DashboardScreen extends StatelessWidget {
               texto: 'Ver Extrato',
               icone: Icons.list,
               cor: Colors.blue,
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ExtratoScreen(),
+                  ),
+                );
+              },
             ),
           ],
         ),
