@@ -5,7 +5,7 @@ class NovaEntradaScreen extends StatefulWidget {
   const NovaEntradaScreen({super.key});
 
   @override
-  State<NovaEntradaScreen> createState() => _NovaEntradaScreenState();
+ State<NovaEntradaScreen> createState() => _NovaEntradaScreenState();
 }
 
 class _NovaEntradaScreenState extends State<NovaEntradaScreen> {
@@ -31,8 +31,21 @@ class _NovaEntradaScreenState extends State<NovaEntradaScreen> {
 
   void _salvarEntrada() {
     if (_formKey.currentState!.validate()) {
+      final descricao = _descricaoController.text;
+      final valor = double.tryParse(_valorController.text) ?? 0;
+
+      DadosApp.adicionar(
+        Transacao(
+          tipo: 'entrada',
+          descricao: descricao,
+          valor: valor,
+        ),
+      );
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Entrada salva com sucesso')),
+        const SnackBar(
+          content: Text('Entrada salva com sucesso'),
+        ),
       );
 
       Navigator.pop(context);
@@ -44,68 +57,114 @@ class _NovaEntradaScreenState extends State<NovaEntradaScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Nova Entrada'),
+        centerTitle: true,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _valorController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Valor',
-                  prefixText: 'R\$ ',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Informe um valor válido';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _descricaoController,
-                decoration: const InputDecoration(
-                  labelText: 'Descrição',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Preencha a descrição';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<String>(
-                value: _categoriaSelecionada,
-                hint: const Text('Categoria'),
-                items: _categorias.map((c) {
-                  return DropdownMenuItem(
-                    value: c,
-                    child: Text(c),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _categoriaSelecionada = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Selecione uma categoria';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _salvarEntrada,
-                child: const Text('Salvar Entrada'),
+        child: Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x14000000),
+                blurRadius: 10,
+                offset: Offset(0, 4),
               ),
             ],
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _valorController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Valor',
+                    prefixText: 'R\$ ',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Informe um valor válido';
+                    }
+
+                    final numero = double.tryParse(
+                      value.replaceAll(',', '.'),
+                    );
+
+                    if (numero == null || numero <= 0) {
+                      return 'Informe um valor válido';
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _descricaoController,
+                  decoration: const InputDecoration(
+                    labelText: 'Descrição',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Preencha a descrição';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  value: _categoriaSelecionada,
+                  decoration: const InputDecoration(
+                    labelText: 'Categoria',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: _categorias.map((categoria) {
+                    return DropdownMenuItem<String>(
+                      value: categoria,
+                      child: Text(categoria),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _categoriaSelecionada = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Selecione uma categoria';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  height: 54,
+                  child: ElevatedButton(
+                    onPressed: _salvarEntrada,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    child: const Text(
+                      'Salvar Entrada',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
