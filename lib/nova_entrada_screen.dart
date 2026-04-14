@@ -1,3 +1,4 @@
+import 'dados.dart';
 import 'package:flutter/material.dart';
 
 class NovaEntradaScreen extends StatefulWidget {
