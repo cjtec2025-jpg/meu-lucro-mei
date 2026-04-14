@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'nova_entrada_screen.dart';
+import 'nova_saida_screen.dart';
 
 void main() {
   runApp(const MeuLucroApp());
