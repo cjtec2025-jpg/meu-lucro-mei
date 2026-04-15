@@ -14,7 +14,8 @@ class _NovaEntradaScreenState extends State<NovaEntradaScreen> {
 
   void _salvarEntrada() {
     final descricao = _descricaoController.text.trim();
-    final valor = double.tryParse(_valorController.text.replaceAll(',', '.')) ?? 0;
+    final valor =
+        double.tryParse(_valorController.text.replaceAll(',', '.')) ?? 0;
 
     if (descricao.isEmpty || valor <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,7 +44,7 @@ class _NovaEntradaScreenState extends State<NovaEntradaScreen> {
         title: const Text('Nova Entrada'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
@@ -56,7 +57,8 @@ class _NovaEntradaScreenState extends State<NovaEntradaScreen> {
             const SizedBox(height: 16),
             TextField(
               controller: _valorController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(
                 labelText: 'Valor',
                 border: OutlineInputBorder(),
