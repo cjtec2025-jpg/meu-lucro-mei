@@ -40,9 +40,7 @@ class _ExtratoScreenState extends State<ExtratoScreen> {
                       ),
                     ),
                     title: Text(t.descricao),
-                    subtitle: Text(
-                      isEntrada ? 'Entrada' : 'Saída',
-                    ),
+                    subtitle: Text(isEntrada ? 'Entrada' : 'Saída'),
                     trailing: Text(
                       'R\$ ${t.valor.toStringAsFixed(2)}',
                       style: TextStyle(
