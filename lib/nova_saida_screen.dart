@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dados.dart';
 
 class NovaSaidaScreen extends StatefulWidget {
   const NovaSaidaScreen({super.key});
@@ -8,37 +9,20 @@ class NovaSaidaScreen extends StatefulWidget {
 }
 
 class _NovaSaidaScreenState extends State<NovaSaidaScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _valorController = TextEditingController();
-  final _descricaoController = TextEditingController();
-
-  String? _categoriaSelecionada;
-
-  final List<String> _categorias = [
-    'Alimentação',
-    'Transporte',
-    'Internet',
-    'Material',
-    'Ferramentas',
-    'Impostos',
-    'Outro',
-  ];
-
-  @override
-  void dispose() {
-    _valorController.dispose();
-    _descricaoController.dispose();
-    super.dispose();
-  }
+  final TextEditingController _descricaoController = TextEditingController();
+  final TextEditingController _valorController = TextEditingController();
 
   void _salvarSaida() {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Saída salva com sucesso')),
-      );
+    final descricao = _descricaoController.text;
+    final valor = double.tryParse(_valorController.text) ?? 0;
 
-      Navigator.pop(context);
+    if (descricao.isEmpty || valor == 0) {
+      return;
     }
+
+    Dados.adicionarSaida(descricao, valor);
+
+    Navigator.pop(context);
   }
 
   @override
@@ -48,67 +32,31 @@ class _NovaSaidaScreenState extends State<NovaSaidaScreen> {
         title: const Text('Nova Saída'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _valorController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Valor',
-                  prefixText: 'R\$ ',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Informe um valor válido';
-                  }
-                  return null;
-                },
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _descricaoController,
+              decoration: const InputDecoration(
+                labelText: 'Descrição',
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: _descricaoController,
-                decoration: const InputDecoration(
-                  labelText: 'Descrição',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Preencha a descrição';
-                  }
-                  return null;
-                },
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: _valorController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Valor',
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<String>(
-                value: _categoriaSelecionada,
-                hint: const Text('Categoria'),
-                items: _categorias.map((c) {
-                  return DropdownMenuItem(
-                    value: c,
-                    child: Text(c),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    _categoriaSelecionada = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null) {
-                    return 'Selecione uma categoria';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _salvarSaida,
-                child: const Text('Salvar Saída'),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _salvarSaida,
+              child: const Text('Salvar'),
+            ),
+          ],
         ),
       ),
     );
