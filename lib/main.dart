@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dados.dart';
 import 'nova_entrada_screen.dart';
 import 'nova_saida_screen.dart';
 import 'extrato_screen.dart';
@@ -13,22 +14,68 @@ class MeuLucroApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Meu Lucro MEI',
       debugShowCheckedModeBanner: false,
+      title: 'Meu Lucro MEI',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
+        colorSchemeSeed: Colors.green,
       ),
       home: const DashboardScreen(),
     );
   }
 }
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 
   @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  Future<void> _abrirNovaEntrada() async {
+    final resultado = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NovaEntradaScreen(),
+      ),
+    );
+
+    if (resultado == true) {
+      setState(() {});
+    }
+  }
+
+  Future<void> _abrirNovaSaida() async {
+    final resultado = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NovaSaidaScreen(),
+      ),
+    );
+
+    if (resultado == true) {
+      setState(() {});
+    }
+  }
+
+  Future<void> _abrirExtrato() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ExtratoScreen(),
+      ),
+    );
+
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final entradas = DadosApp.totalEntradas();
+    final saidas = DadosApp.totalSaidas();
+    final lucro = DadosApp.lucroAtual();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meu Lucro MEI'),
@@ -38,76 +85,57 @@ class DashboardScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            const SizedBox(height: 10),
-
-            const _ResumoCard(
+            ResumoCard(
               titulo: 'Saldo atual',
-              valor: 0.0,
+              valor: lucro,
               destaque: true,
             ),
             const SizedBox(height: 12),
-
-            const _ResumoCard(
-              titulo: 'Entradas do mês',
-              valor: 0.0,
+            Row(
+              children: [
+                Expanded(
+                  child: ResumoCard(
+                    titulo: 'Entradas do mês',
+                    valor: entradas,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ResumoCard(
+                    titulo: 'Saídas do mês',
+                    valor: saidas,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
-
-            const _ResumoCard(
-              titulo: 'Saídas do mês',
-              valor: 0.0,
-            ),
-            const SizedBox(height: 12),
-
-            const _ResumoCard(
-              titulo: 'Lucro do mês',
-              valor: 0.0,
-            ),
-            const SizedBox(height: 20),
-
-            _AcaoButton(
+            const SizedBox(height: 24),
+            AcaoButton(
               texto: 'Nova Entrada',
               icone: Icons.add,
               cor: Colors.green,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NovaEntradaScreen(),
-                  ),
-                );
-              },
+              onTap: _abrirNovaEntrada,
             ),
             const SizedBox(height: 12),
-
-            _AcaoButton(
+            AcaoButton(
               texto: 'Nova Saída',
               icone: Icons.remove,
               cor: Colors.red,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NovaSaidaScreen(),
-                  ),
-                );
-              },
+              onTap: _abrirNovaSaida,
             ),
             const SizedBox(height: 12),
-
-            _AcaoButton(
+            AcaoButton(
               texto: 'Ver Extrato',
               icone: Icons.list,
               cor: Colors.blue,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ExtratoScreen(),
-                  ),
-                );
-              },
+              onTap: _abrirExtrato,
             ),
+            const SizedBox(height: 24),
+            if (DadosApp.listarTransacoes().isEmpty)
+              const Text(
+                'Adicione entradas e saídas para acompanhar seu lucro.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
+              ),
           ],
         ),
       ),
@@ -115,12 +143,13 @@ class DashboardScreen extends StatelessWidget {
   }
 }
 
-class _ResumoCard extends StatelessWidget {
+class ResumoCard extends StatelessWidget {
   final String titulo;
   final double valor;
   final bool destaque;
 
-  const _ResumoCard({
+  const ResumoCard({
+    super.key,
     required this.titulo,
     required this.valor,
     this.destaque = false,
@@ -131,15 +160,18 @@ class _ResumoCard extends StatelessWidget {
     final valorStyle = TextStyle(
       fontSize: destaque ? 26 : 20,
       fontWeight: FontWeight.bold,
-      color: destaque ? Colors.blue : Colors.black,
+      color: destaque ? Colors.green : Colors.black,
     );
 
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: destaque ? Colors.blue.withOpacity(0.1) : Colors.grey[100],
-        borderRadius: BorderRadius.circular(12),
+        color: destaque ? Colors.green.shade50 : Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: destaque ? Colors.green.shade200 : Colors.grey.shade300,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,13 +188,14 @@ class _ResumoCard extends StatelessWidget {
   }
 }
 
-class _AcaoButton extends StatelessWidget {
+class AcaoButton extends StatelessWidget {
   final String texto;
   final IconData icone;
   final Color cor;
   final VoidCallback onTap;
 
-  const _AcaoButton({
+  const AcaoButton({
+    super.key,
     required this.texto,
     required this.icone,
     required this.cor,
@@ -190,7 +223,7 @@ class _AcaoButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: cor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(14),
           ),
         ),
       ),
