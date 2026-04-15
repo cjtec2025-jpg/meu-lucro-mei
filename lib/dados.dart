@@ -1,5 +1,8 @@
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Transacao {
-  final String tipo; // "entrada" ou "saida"
+  final String tipo;
   final String descricao;
   final double valor;
 
@@ -8,16 +11,47 @@ class Transacao {
     required this.descricao,
     required this.valor,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'tipo': tipo,
+      'descricao': descricao,
+      'valor': valor,
+    };
+  }
+
+  factory Transacao.fromMap(Map<String, dynamic> map) {
+    return Transacao(
+      tipo: map['tipo'],
+      descricao: map['descricao'],
+      valor: (map['valor'] as num).toDouble(),
+    );
+  }
 }
 
 class DadosApp {
-  static final List<Transacao> transacoes = [];
+  static List<Transacao> transacoes = [];
+  static const String _key = 'transacoes';
 
-  static void adicionar(Transacao t) {
-    transacoes.add(t);
+  static Future<void> carregar() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? jsonString = prefs.getString(_key);
+
+    if (jsonString != null) {
+      final List lista = jsonDecode(jsonString);
+      transacoes = lista.map((e) => Transacao.fromMap(e)).toList();
+    }
   }
 
-  static void adicionarEntrada(String descricao, double valor) {
+  static Future<void> salvar() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String jsonString =
+        jsonEncode(transacoes.map((e) => e.toMap()).toList());
+
+    await prefs.setString(_key, jsonString);
+  }
+
+  static Future<void> adicionarEntrada(String descricao, double valor) async {
     transacoes.add(
       Transacao(
         tipo: 'entrada',
@@ -25,9 +59,10 @@ class DadosApp {
         valor: valor,
       ),
     );
+    await salvar();
   }
 
-  static void adicionarSaida(String descricao, double valor) {
+  static Future<void> adicionarSaida(String descricao, double valor) async {
     transacoes.add(
       Transacao(
         tipo: 'saida',
@@ -35,6 +70,7 @@ class DadosApp {
         valor: valor,
       ),
     );
+    await salvar();
   }
 
   static List<Transacao> listarTransacoes() {
@@ -44,9 +80,7 @@ class DadosApp {
   static double totalEntradas() {
     double total = 0;
     for (var t in transacoes) {
-      if (t.tipo == 'entrada') {
-        total += t.valor;
-      }
+      if (t.tipo == 'entrada') total += t.valor;
     }
     return total;
   }
@@ -54,9 +88,7 @@ class DadosApp {
   static double totalSaidas() {
     double total = 0;
     for (var t in transacoes) {
-      if (t.tipo == 'saida') {
-        total += t.valor;
-      }
+      if (t.tipo == 'saida') total += t.valor;
     }
     return total;
   }
@@ -65,13 +97,15 @@ class DadosApp {
     return totalEntradas() - totalSaidas();
   }
 
-  static void removerTransacao(int index) {
+  static Future<void> removerTransacao(int index) async {
     if (index >= 0 && index < transacoes.length) {
       transacoes.removeAt(index);
+      await salvar();
     }
   }
 
-  static void limparTudo() {
+  static Future<void> limparTudo() async {
     transacoes.clear();
+    await salvar();
   }
 }
