@@ -14,7 +14,8 @@ class _NovaSaidaScreenState extends State<NovaSaidaScreen> {
 
   void _salvarSaida() {
     final descricao = _descricaoController.text.trim();
-    final valor = double.tryParse(_valorController.text.replaceAll(',', '.')) ?? 0;
+    final valor =
+        double.tryParse(_valorController.text.replaceAll(',', '.')) ?? 0;
 
     if (descricao.isEmpty || valor <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,7 +44,7 @@ class _NovaSaidaScreenState extends State<NovaSaidaScreen> {
         title: const Text('Nova Saída'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
@@ -56,7 +57,8 @@ class _NovaSaidaScreenState extends State<NovaSaidaScreen> {
             const SizedBox(height: 16),
             TextField(
               controller: _valorController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(
                 labelText: 'Valor',
                 border: OutlineInputBorder(),
