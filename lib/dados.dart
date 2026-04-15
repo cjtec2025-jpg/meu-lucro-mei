@@ -38,7 +38,7 @@ class DadosApp {
   }
 
   static List<Transacao> listarTransacoes() {
-    return transacoes;
+    return List.from(transacoes);
   }
 
   static double totalEntradas() {
