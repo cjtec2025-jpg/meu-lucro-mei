@@ -20,3 +20,4 @@ Um app simples, rápido e prático para registrar entradas, saídas e acompanhar
 
 ## Status
 Em desenvolvimento
+teste feito pelo tablet
